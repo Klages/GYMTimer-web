@@ -1,0 +1,242 @@
+/* style.css */
+
+/* Mimicking colors from the Python script */
+:root {
+    --bg-color: black;
+    --dynamic-value-color: red;
+    --static-text-color: #CCCCCC;
+    --active-bg-color: var(--dynamic-value-color);
+    --active-fg-color: var(--bg-color);
+    --cursor-color: var(--dynamic-value-color);
+    --highlight-color: var(--dynamic-value-color);
+    --flash-timer-fg: #FF6666;
+    --flash-button-bg: #550000;
+}
+
+/* --- NEW: Ensure HTML covers full height and background --- */
+html {
+    height: 100%;
+    background-color: var(--bg-color);
+    box-sizing: border-box; /* Include padding/border in element's total width/height */
+}
+
+/* Modify Body for consistent height and background */
+body {
+    height: 100%; /* Make body fill the html element */
+    margin: 0; /* Remove default margin */
+    background-color: var(--bg-color); /* Set background */
+    color: var(--static-text-color);
+    font-family: 'Helvetica', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Removed min-height: 100vh; in favor of height: 100% */
+    overflow: hidden; /* Still hide overflow on desktop */
+    box-sizing: border-box;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    /* border: 1px solid var(--static-text-color); */ /* Keep border commented out */
+    border-radius: 8px;
+    min-width: 300px;
+    width: 95%; /* Use width instead of max-width for flex sizing */
+    max-width: 1200px; /* Optional overall max width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 95%; /* Use height relative to body */
+    max-height: 95vh; /* Keep max-height relative to viewport */
+    box-sizing: border-box;
+}
+
+h1 {
+    color: var(--static-text-color);
+    margin-bottom: 15px;
+    font-size: 2rem;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+#timer-display {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: var(--dynamic-value-color);
+    background-color: var(--bg-color);
+    padding: 5px; /* Reduced padding slightly */
+    margin-bottom: 15px; /* Adjust margin */
+    line-height: 1;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    flex-grow: 1; /* Allow vertical growth */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px;
+
+    /* --- Refined CSS Font Size Control --- */
+    /* clamp(MIN, PREFERRED, MAX) */
+    /* PREFERRED uses the minimum of a height-based size (18vh) and a width-based size (15vw) */
+    /* Adjust the 18vh and 15vw values as needed */
+    font-size: clamp(24px, min(18vh, 15vw), 400px); /* Min 24px, preferred min(18% vh, 15% vw), max 400px */
+}
+
+
+.controls {
+    margin-bottom: 15px;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.controls label,
+.controls input,
+.controls button {
+    font-size: 1rem;
+    margin: 5px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--static-text-color);
+    background-color: var(--bg-color);
+    color: var(--static-text-color);
+    vertical-align: middle;
+}
+
+.controls input {
+    width: 60px;
+    text-align: right;
+    caret-color: var(--cursor-color);
+}
+.controls input:focus {
+    outline: 1px solid var(--highlight-color);
+}
+
+
+.controls button {
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.controls button:hover,
+.controls button:focus {
+    background-color: var(--active-bg-color);
+    color: var(--active-fg-color);
+}
+.controls button:active {
+    transform: translateY(1px);
+}
+
+.volume-info {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.volume-info span span {
+    color: var(--dynamic-value-color);
+    font-weight: bold;
+}
+
+
+#status-bar {
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 0.85rem;
+    min-height: 1.2em;
+    color: var(--static-text-color);
+    text-align: left;
+    width: 100%;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Flash effects */
+.flash-timer {
+    color: var(--flash-timer-fg) !important;
+}
+.flash-button {
+     background-color: var(--flash-button-bg) !important;
+     color: var(--active-fg-color) !important;
+}
+
+
+/* --- Responsive Adjustments --- */
+/* Keep the media query for LAYOUT changes */
+@media (max-width: 600px) {
+
+    body {
+        /* Allow vertical scrolling */
+        overflow-y: auto;
+        overflow-x: hidden;
+        /* Align container to top on mobile */
+        align-items: flex-start;
+        /* Height is already 100% from rule outside media query */
+    }
+
+    .container {
+        width: 100%; /* Use full width */
+        height: auto; /* Let height adjust to content */
+        min-height: 100%; /* Ensure it fills viewport vertically */
+        max-height: none; /* Remove max-height */
+        padding: 15px;
+        border: none;
+        border-radius: 0;
+        justify-content: flex-start; /* Align content to top */
+    }
+
+    h1 {
+        font-size: 1.5rem; /* Smaller title */
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    #timer-display {
+         min-height: 100px; /* Adjusted min-height */
+         padding: 5px;
+         flex-grow: 0.5; /* Adjust growth if needed */
+         /* Font size is handled globally by clamp() */
+    }
+
+    .controls {
+        display: flex;
+        flex-wrap: wrap; /* Allow items to wrap */
+        justify-content: center; /* Center wrapped items */
+        gap: 10px; /* Space between items */
+        margin-bottom: 20px; /* More space below controls */
+        width: 100%; /* Ensure controls take full width */
+    }
+
+     /* Style threshold group */
+    .controls label[for="threshold-input"] { order: 1; }
+    .controls input#threshold-input { order: 2; width: 70px; }
+    .controls button#set-threshold-btn { order: 3; }
+
+     /* Make start button prominent */
+    .controls button#start-mic-btn {
+        order: 4; width: 80%; max-width: 250px; padding: 12px; font-size: 1.1rem; margin-top: 10px;
+    }
+
+    /* Adjust default control item sizing if needed */
+     .controls input, .controls button { margin: 0; }
+
+
+    .volume-info {
+        font-size: 0.8rem;
+        flex-direction: column; /* Stack volume info */
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 20px;
+    }
+
+    #status-bar {
+        font-size: 0.75rem;
+        text-align: center;
+        margin-top: 15px;
+        padding-bottom: 10px; /* Ensure space at bottom */
+    }
+}
