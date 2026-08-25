@@ -2,6 +2,8 @@
 
 A simple, responsive web-based timer designed for workouts. It uses your device's microphone to listen for claps, allowing you to start and reset the timer without having to touch your phone or computer.
 
+<img width="1767" height="1015" alt="image" src="https://github.com/user-attachments/assets/93971d2a-5b66-4f8a-8192-4c08afdf79a9" />
+
 ## Features
 
 - **Hands-Free Control:** Starts and resets the timer using audio detection (a sharp noise like a clap).
